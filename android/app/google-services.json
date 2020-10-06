@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "670318174190",
+    "firebase_url": "https://recipesearch-3c7e5.firebaseio.com",
+    "project_id": "recipesearch-3c7e5",
+    "storage_bucket": "recipesearch-3c7e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670318174190:android:616447fcce50edb29178ff",
+        "android_client_info": {
+          "package_name": "com.foodology.recipesearch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670318174190-47kgfk429cqat8eb5apb5nmop4conro0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.foodology.recipesearch",
+            "certificate_hash": "ccd21f644445ca383868c9e8ed55330c45a4fdcd"
+          }
+        },
+        {
+          "client_id": "670318174190-crcmfifik7isc7i5q67nts9511sphq16.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoi8D_6BZmUgXR8-ExfuF-nYQNqQ6ngj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670318174190-crcmfifik7isc7i5q67nts9511sphq16.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

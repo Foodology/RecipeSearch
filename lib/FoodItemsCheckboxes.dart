@@ -1,53 +1,89 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class FoodItemsCheckboxes extends StatefulWidget {
+
+  final Map<String, bool> itemsMap;
+  FoodItemsCheckboxes({this.itemsMap});
+
   @override
   _FoodItemsCheckboxesState createState() => _FoodItemsCheckboxesState();
 }
 
 class _FoodItemsCheckboxesState extends State<FoodItemsCheckboxes> {
 
-  Map<String, bool> itemsMap = {
-    "Salmon" : false,
-    "Hot Sauce" : false,
-    "Bell Pepper" : false,
-    "Pepper" : false,
-    "Salt" : false,
-    "Beef" : false,
-    "Shrimp" : false,
-    "Chicken" : false,
-    "Lemon Pepper" : false
-  };
+  String dropdownValue = '1';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        margin: EdgeInsets.symmetric(vertical: 40),
-        child: Column(
-          children: [
-            for (var v in itemsMap.keys)
-              Row(
-                children: [
-                  Checkbox(
-                    onChanged: (bool value) {
-                      setState(() {
-                        itemsMap[v] = value;
-                      });
-                    },
-                    value: itemsMap[v],
-                  ),
-                  Text(
-                    v,
-                  ),
-                ],
-              ),
-            RaisedButton(
-              onPressed: () {},
-              child: const Text('Search', style: TextStyle(fontSize: 20)),
+    return Container(
+      child: Column(
+        children: [
+          for (var v in this.widget.itemsMap.keys)
+            Row(
+              children: [
+                Checkbox(
+                  onChanged: (bool value) {
+                    setState(() {
+                      this.widget.itemsMap[v] = value;
+                    });
+                  },
+                  value: this.widget.itemsMap[v],
+                ),
+                Text(
+                  v,
+                ),
+              ],
             ),
-          ],
-        ),
+          DropdownButton<String>(
+            value: dropdownValue,
+            icon: Icon(Icons.arrow_downward),
+            iconSize: 24,
+            elevation: 16,
+            onChanged: (String newValue) {
+              setState(() {
+                dropdownValue = newValue;
+              });
+            },
+            items: <String>['1', '2', '3', '4']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+          RaisedButton(
+            onPressed: () {
+              List<String> search = [];
+              for (var v in this.widget.itemsMap.keys){
+                if (this.widget.itemsMap[v] == true) {
+                  search.add(v);
+                }
+              }
+              Firestore.instance
+                  .collection('users')
+                  .document('user1')
+                  .updateData({
+                    'searchRecipe': search,
+                    'numberOfNeighbors': int.parse(dropdownValue)
+              }).then((value) => Firestore.instance
+                  .collection('users')
+                  .document('user1').updateData({
+                'start': true
+              }));
+            },
+            child: const Text('Search', style: TextStyle(fontSize: 20)),
+          ),
+          RaisedButton(onPressed: () {
+            Firestore.instance.collection('users')
+                .document('user1')
+                .setData({
+              'start': false
+            });
+          },
+            child: const Text('Clean', style: TextStyle(fontSize: 20)),)
+        ],
       ),
     );
   }
