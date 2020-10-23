@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class RecommendedBuilder extends StatefulWidget {
+  final String user;
+  RecommendedBuilder({this.user});
+
   @override
   _RecommendedBuilderState createState() => _RecommendedBuilderState();
 }
@@ -12,7 +15,7 @@ class _RecommendedBuilderState extends State<RecommendedBuilder> {
     return Container(
       child: StreamBuilder(
           stream: Firestore.instance.collection('users')
-              .document('user1')
+              .document(this.widget.user)
               .snapshots(),
           builder: (context, AsyncSnapshot < DocumentSnapshot > snapshot) {
             if (!snapshot.hasData) {

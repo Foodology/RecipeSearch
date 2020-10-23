@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class FoodItemsCheckboxes extends StatefulWidget {
 
   final Map<String, bool> itemsMap;
-  FoodItemsCheckboxes({this.itemsMap});
+  final String user;
+  FoodItemsCheckboxes({this.itemsMap, this.user});
 
   @override
   _FoodItemsCheckboxesState createState() => _FoodItemsCheckboxesState();
@@ -63,13 +64,13 @@ class _FoodItemsCheckboxesState extends State<FoodItemsCheckboxes> {
               }
               Firestore.instance
                   .collection('users')
-                  .document('user1')
+                  .document(this.widget.user)
                   .updateData({
                     'searchRecipe': search,
                     'numberOfNeighbors': int.parse(dropdownValue)
               }).then((value) => Firestore.instance
                   .collection('users')
-                  .document('user1').updateData({
+                  .document(this.widget.user).updateData({
                 'start': true
               }));
             },
@@ -77,7 +78,7 @@ class _FoodItemsCheckboxesState extends State<FoodItemsCheckboxes> {
           ),
           RaisedButton(onPressed: () {
             Firestore.instance.collection('users')
-                .document('user1')
+                .document(this.widget.user)
                 .setData({
               'start': false
             });
